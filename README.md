@@ -1,51 +1,47 @@
-# React + TypeScript + Vite
+React + TypeScript + Vite
+Esta plantilla proporciona una configuración mínima para que React funcione en Vite con HMR (Hot Module Replacement) y algunas reglas de ESLint.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Actualmente, hay dos complementos (plugins) oficiales disponibles:
 
-Currently, two official plugins are available:
+@vitejs/plugin-react utiliza Babel (o oxc cuando se usa en rolldown-vite) para Fast Refresh.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+@vitejs/plugin-react-swc utiliza SWC para Fast Refresh.
 
-## React Compiler
+React Compiler
+El React Compiler no está habilitado en esta plantilla debido a su impacto en el rendimiento de desarrollo y compilación (build). Para añadirlo, consulta esta documentación.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Expandiendo la configuración de ESLint
+Si estás desarrollando una aplicación de producción, recomendamos actualizar la configuración para habilitar reglas de linting con conocimiento de tipos (type-aware):
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
+JavaScript
 export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
-      // Other configs...
+      // Otras configuraciones...
 
-      // Remove tseslint.configs.recommended and replace with this
+      // Elimina tseslint.configs.recommended y reemplázalo por esto
       tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
+      // Alternativamente, utiliza esto para reglas más estrictas
       tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
+      // Opcionalmente, añade esto para reglas estilísticas
       tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
+      // Otras configuraciones...
     ],
     languageOptions: {
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
         tsconfigRootDir: import.meta.dirname,
       },
-      // other options...
+      // otras opciones...
     },
   },
 ])
-```
+También puedes instalar eslint-plugin-react-x y eslint-plugin-react-dom para reglas de lint específicas de React:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
+JavaScript
 // eslint.config.js
 import reactX from 'eslint-plugin-react-x'
 import reactDom from 'eslint-plugin-react-dom'
@@ -55,10 +51,10 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
-      // Other configs...
-      // Enable lint rules for React
+      // Otras configuraciones...
+      // Habilita reglas de lint para React
       reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
+      // Habilita reglas de lint para React DOM
       reactDom.configs.recommended,
     ],
     languageOptions: {
@@ -66,8 +62,7 @@ export default defineConfig([
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
         tsconfigRootDir: import.meta.dirname,
       },
-      // other options...
+      // otras opciones...
     },
   },
 ])
-```
